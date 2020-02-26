@@ -9,7 +9,7 @@
         "http-auth": "^2.2.9",
         "module": "^1.2.5",
         "mysql": "^2.9.0",
-        "sequelize": "^3.33.0"
+        "sequelize": "^5.15.1"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
