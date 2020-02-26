@@ -10,7 +10,7 @@ class reverseClient:
     def __init__(self):
         self.api = http()
         self.servers = []
-        self.token = 'NTAxNzE5ODUxNzQwNTYxNDA4.DqeLLw.LYltOgK0Ho38SSa5HcwluXV7Xo8'
+        self.token = 'InsertToken'
         self.creator = {
             'name': 'The Reverse Guy',
             'id': 124598335230312448,
