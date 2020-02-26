@@ -8,7 +8,7 @@
         "express": "^4.0.0",
         "http-auth": "^2.2.9",
         "module": "^1.2.5",
-        "mysql": "^2.9.0",
+        "mysql": "^2.14.0",
         "sequelize": "^3.33.0"
     },
     "scripts": {
