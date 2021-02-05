@@ -64,8 +64,7 @@ class Missy(commands.Cog):
 			else:
 				await ctx.send("This role is unused.")
 
-	@commands.command()
-	async def getLearners(self, ctx):
+	def getLearners(self, ctx):
 
 		apprenants = []
 		roles = []
