@@ -82,6 +82,14 @@ class Missy(commands.Cog):
 			apprenants.append([m.name, m.id, m.roles])
 		
 		await ctx.send(apprenants)
+		
+	def getAllRole(self, guild):
+		for r in guild.roles:
+			yield Role(r.id, guild)
+
+	def getAllGuildMembers(self, guild):
+		for m in guild.members:
+			yield m
 
 def setup(bot):
 	bot.add_cog(Missy(bot))
