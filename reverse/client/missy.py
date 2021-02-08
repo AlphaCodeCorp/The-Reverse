@@ -64,22 +64,15 @@ class Missy(commands.Cog):
 			else:
 				await ctx.send("This role is unused.")
 
-	def getLearners(self, ctx):
+	def getAllRole(self, guild):
+		
+		for r in guild.roles:
+			yield Role(r.id, guild)
 
-		apprenants = []
-		roles = []
+	def getAllGuildMembers(self, guild):
 
-		for r in ctx.guild.roles:
-			roles.append([r.id, r.name])
-
-		await ctx.send(roles)
-
-		await ctx.send("------------------------------")
-
-		for m in ctx.guild.members:
-			apprenants.append([m.name, m.id, m.roles])
-
-		await ctx.send(apprenants)
+		for m in guild.members:
+			yield m
 
 def setup(bot):
 	bot.add_cog(Missy(bot))
