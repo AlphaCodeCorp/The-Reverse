@@ -55,6 +55,7 @@ venv.bak/
 # Reverse
 etc/backend.json
 etc/
+run
 run.ps1
 cogs.json
 

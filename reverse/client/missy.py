@@ -64,5 +64,13 @@ class Missy(commands.Cog):
 			else:
 				await ctx.send("This role is unused.")
 
+	def getAllRole(self, guild):
+		for r in guild.roles:
+			yield Role(r.id, guild)
+
+	def getAllGuildMembers(self, guild):
+		for m in guild.members:
+			yield m
+
 def setup(bot):
 	bot.add_cog(Missy(bot))
