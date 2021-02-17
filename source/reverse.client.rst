@@ -10,6 +10,7 @@ Subpackages
    reverse.client.MLA
    reverse.client.addict_lair
    reverse.client.debugger
+   reverse.client.MissyCore
 
 Submodules
 ----------
@@ -22,13 +23,6 @@ reverse.client.default module
    :undoc-members:
    :show-inheritance:
 
-reverse.client.missy module
----------------------------
-
-.. automodule:: reverse.client.missy
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 reverse.client.poc\_mood module
 -------------------------------
