@@ -5,7 +5,7 @@ from urllib import parse
 from reverse.core._service import SqliteService
 from reverse.core._models import Context, Role
 from reverse.core import utils
-from reverse.client.MissyCore._model.missyCore import MissyCore
+from reverse.client.MissyCore._model import MissyCore
 
 class Missy(commands.Cog):
 
