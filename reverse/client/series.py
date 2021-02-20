@@ -79,7 +79,8 @@ class Series(commands.Cog):
 			"Second": _kwargs.get('second', 0),
 			"Adding": _kwargs.get("adding", adding),
 			"Timer": delta,
-			"Date": next_call
+			"Date": next_call,
+			"Triggered": 0
 		}
 
 		# Store method.__name__
@@ -207,12 +208,42 @@ class Series(commands.Cog):
 
 		await ctx.send(embed=embed)
 
-		if(settings != None):
+		if(settings != None ):
 			next_call = utils.generate_next_call(days=int(settings.get('Day', 1)), hours=int(settings.get('Hour', 7)), minutes=int(settings.get('Minute', 0)), seconds=int(settings.get('Second', 0)), adding=settings.get('Adding', False))
 			await ctx.send("BetaSeries next call for the loop : {} - Δ:{} ".format(next_call, utils.time_until(next_call)))
 			await ctx.send("Last call Δ:{} ".format( (settings.get('Date', None)-utils.now()).total_seconds() ))
 			print("BetaSeries next call for the loop : {} - Δ:{} ".format(next_call, utils.time_until(next_call)))
 			self.task.recalculate_interval('release_today', next_call)
+
+	@Worker.register()
+	async def debug_release(self, **kwargs) -> None:
+		ctx = kwargs['ctx']
+		settings = kwargs.get("data", None)
+		now = utils.now()
+		print(f"Start : {settings}")
+
+		if(settings == None):
+			return
+		
+		print(f"Value trigger : {settings['Triggered']}")
+		if(settings.get('Triggered', 0) != 0):
+			last_call = settings['Date']
+			next_call = utils.generate_next_call(days=0, hours=last_call.hour, minutes=last_call.minute+1, seconds=0, adding=False)
+			ckwargs = kwargs.copy()
+
+			await ctx.send("debug_release next call for the loop : {} - Δ:{} - {}".format(next_call, utils.time_until(next_call), utils.now()))
+			await ctx.send("Last call Δ:{} ".format( (settings.get('Date', None)-utils.now()).total_seconds() ))
+			print("debug_release next call for the loop : {} - Δ:{} ".format(next_call, utils.time_until(next_call)))
+
+			ckwargs['data']['Date'] = next_call
+			ckwargs['data']['Timer'] = utils.time_until(next_call)
+			ckwargs['data']['Triggered'] = 0
+			print(f"outside : {ckwargs}")
+
+			self.task.recalculate_interval('debug_release', next_call, restart=True, kwargs=ckwargs, seconds=59, ctx=ctx)
+		else:
+			settings['Triggered'] = 1
+			print(f"increment trigger : {settings['Triggered']}")
 
 	async def planning_member(self) -> dict:
 		"""Return dictionnary of released planning of user

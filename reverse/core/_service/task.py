@@ -35,6 +35,10 @@ class TaskService:
 		loop.start(*args, **kwargs)
 		self.fields.append(loop)
 		return loop
+	
+	def restart(self, loop, *args, **kwargs):
+		loop.restart(*args, **kwargs)
+		return loop
 
 	def change_interval(self, loop, *, seconds=0, minutes=0, hours=0):
 		loop.change_interval(seconds=seconds, minutes=minutes, hours=hours)
@@ -43,16 +47,19 @@ class TaskService:
 		delta = utils.time_until(when)
 		return self.createLoop(func, seconds=delta)
 
-	def recalculate_interval(self, loop: str, when: datetime):
+	def recalculate_interval(self, loop: str, when: datetime, restart: bool= False, *args, **kwargs):
 		delta = utils.time_until(when)
 		loop = self.findTaskByName(loop)
 		if(loop):
-			loop.change_interval(seconds=int(delta))
-		
+			if(restart):
+				loop.restart(*args, **kwargs)
+			else:
+				loop.change_interval(seconds=int(delta))
+
 	def createLoop(self, func, *, seconds=0, minutes=0, hours=0, count=None, reconnect=True, loop=None, ctx=None, data=None):
 		return Loop(func, seconds=seconds, minutes=minutes, hours=hours, count=count, reconnect=reconnect, loop=loop, ctx=ctx, data=data)
 		# return tasks.Loop(func, seconds=seconds, minutes=minutes, hours=hours, count=count, reconnect=reconnect, loop=loop)
-		
+
 	def storeField(self, loop):
 		self.fields.append(loop)
 		return Loop

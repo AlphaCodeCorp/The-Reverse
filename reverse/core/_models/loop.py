@@ -35,7 +35,7 @@ class Loop(Loop):
 	def change_interval(self, *, seconds=0, minutes=0, hours=0):
 		super().change_interval(seconds=seconds, minutes=minutes, hours=hours)
 
-	def restart(self, **kwargs):
+	def o_restart(self, **kwargs):
 		_old = {
 			"ctx": self.ctx,
 			"data": self.data
