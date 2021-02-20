@@ -3,7 +3,7 @@ from discord import Channel
 
 class Target(Role):
 
-    def __init__(self, id: int, role: Role, channel: Channel, name: String, String, event: String):
+    def __init__(self, id: int, role: Role, channel: Channel, name: String):
         self.id
         self.role = role
         self.channel = channel

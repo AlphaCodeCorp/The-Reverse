@@ -1,10 +1,11 @@
 from discord.ext import commands
 from discord import Guild
-import asyncio
+import asyncio, datetime
 from urllib import parse
 from reverse.core._service import SqliteService
 from reverse.core._models import Context, Role
 from reverse.core import utils
+from reverse.client.MissyCore._model.missyCore import MissyCore
 
 class Missy(commands.Cog):
 
@@ -63,6 +64,15 @@ class Missy(commands.Cog):
 					await ctx.send("User: {}".format(v))
 			else:
 				await ctx.send("This role is unused.")
-		
+
+	
+	@commands.command()
+	async def tt(self, ctx, *args):
+		_kwargs, _args = utils.parse_args(args)
+		print(_kwargs)
+
+		missys = MissyCore(ctx)
+		missys.roll(datetime.date.today(), missys.targetG1)
+
 def setup(bot):
 	bot.add_cog(Missy(bot))
