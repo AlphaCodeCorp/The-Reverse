@@ -13,6 +13,7 @@ class Missy(commands.Cog):
 		self.bot = bot
 		self.db = SqliteService()
 		self.schedule = []
+		self.missys = MissyCore()
 
 	@commands.command()
 	async def whoismissy(self, ctx):
@@ -65,14 +66,31 @@ class Missy(commands.Cog):
 			else:
 				await ctx.send("This role is unused.")
 
-	
+	# Command to initialize Target
 	@commands.command()
 	async def tt(self, ctx, *args):
 		_kwargs, _args = utils.parse_args(args)
 		print(_kwargs)
 
-		missys = MissyCore(ctx.guild)
-		missys.roll(datetime.date.today(), missys.targetG1)
+		if "role" in _kwargs.keys() and "name" in _kwargs.keys() and "channel" in _kwargs.keys():	
+			self.missys.initialisation(ctx.guild, _kwargs)
+		else:
+			ctx.send("Argument missing in : 'name', 'role',  'channel'\n Impossible Target's initialization")
+	
+	# Command to roll for a target
+	@commands.command()
+	async def ll(self, ctx, *args):
+		_kwargs, _args = utils.parse_args(args)
+
+		if "target" in _kwargs.keys() and "date" in _kwargs.keys():
+			for target in self.missys.listTargets:
+				if target.role.id == int(_kwargs["target"][3:-1]):
+					self.missys.roll(_kwargs["date"], target)
+					break
+				else:
+					print("Not this one")
+		else:
+			await ctx.send("Argument missing in : 'role',  'date'\n Impossible Target's initialization")
 
 def setup(bot):
 	bot.add_cog(Missy(bot))

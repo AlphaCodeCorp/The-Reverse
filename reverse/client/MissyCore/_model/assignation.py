@@ -7,11 +7,11 @@ class Assignation():
         self.target = target
         self.name = name
 
-    def getLastXTirages():
-        print("geet")
+    def getLastXTirages(self):
+        return ["Jean", "Paul"]
 
-    def clearTirage():
-        print("tirage")
+    def clearTirage(self, users: list, lastTirage: list):
+        return ["Jean", "Paul"]
 
-    def roll():
-        print("roll")
+    def roll(self, users: list):
+        return "Paul"
