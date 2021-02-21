@@ -14,4 +14,5 @@ class Target(Role):
         self.name = name
 
     def compare(self, toCompare):
+        # TODO
         return True

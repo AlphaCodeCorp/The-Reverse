@@ -16,7 +16,7 @@ class MissyCore():
     def initialisation(self, guild: Guild, _kwargs):
 
         # set up Target
-        self.channel = disc_get(guild.channels, name=_kwargs["channel"])
+        self.channel = guild.get_channel(int(_kwargs["channel"][2:-1]))
         self.target = Target(1, self.channel, _kwargs["name"], int(_kwargs["role"][3:-1]), guild)
         self.listTargets.append(self.target)
 
@@ -61,5 +61,5 @@ class MissyCore():
         
         for member in membersPick:
             embed.add_field(name=member[0], value=member[1], inline=False)
-        print(target.channel)
-        await target.channel.send(embed=embed)
+
+        await target.channel.send(content="<@&" + str(target.role.id) + ">",embed=embed)

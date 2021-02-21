@@ -1,4 +1,5 @@
 from .target import Target
+import random
 
 class Assignation():
     
@@ -8,10 +9,12 @@ class Assignation():
         self.name = name
 
     def getLastXTirages(self):
+        # TODO
         return ["Jean", "Paul"]
 
     def clearTirage(self, users: list, lastTirage: list):
-        return ["Jean", "Paul"]
+        # TODO
+        return ["Jean", "Paul", "Maurice", "Alain", "Bob", "Thomas"]
 
     def roll(self, users: list):
-        return "Paul"
+        return random.choice(users)
