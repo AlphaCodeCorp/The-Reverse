@@ -85,7 +85,7 @@ class Missy(commands.Cog):
 			if(self.validate(ctx, _kwargs["date"])):
 				for target in self.missys.listTargets:
 					if target.role.id == int(_kwargs["target"][3:-1]):
-						self.missys.roll(_kwargs["date"], target)
+						await self.missys.roll(_kwargs["date"], target)
 						break
 			else:
 				await ctx.send("Incorrect data format, should be DD-MM-YYYY")

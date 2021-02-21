@@ -3,7 +3,7 @@ from .assignation import Assignation
 from .event import Event
 from reverse.core import utils
 from discord.utils import get as disc_get
-from discord import Guild, Role
+from discord import Guild, Role, Embed
 import datetime
 
 class MissyCore():
@@ -30,7 +30,7 @@ class MissyCore():
         self.idAssi = self.idAssi + 1
         self.listAssignations.append(Assignation(self.idAssi, self.target, "Gestionnaire"))
 
-    def roll(self, date: datetime.date, target: Target):
+    async def roll(self, date: datetime.date, target: Target):
         print("--------START------")
         print(self.listTargets)
         print("--------------------")
@@ -54,4 +54,12 @@ class MissyCore():
                     membersPick.append([assignation.name, user])
 
             print(membersPick)
-            
+            await self.message(membersPick, target, date)
+    
+    async def message(self, membersPick: list, target: Target, date:datetime.date):
+        embed = Embed(title=date, color=0xe80005, timestamp=datetime.datetime.today())
+        
+        for member in membersPick:
+            embed.add_field(name=member[0], value=member[1], inline=False)
+        print(target.channel)
+        await target.channel.send(embed=embed)
