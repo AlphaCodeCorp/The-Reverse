@@ -27,6 +27,8 @@ class MissyCore():
         self.listAssignations.append(Assignation(self.idAssi, self.target, "Secretaire"))
         self.idAssi = self.idAssi + 1
         self.listAssignations.append(Assignation(self.idAssi, self.target, "Scribe"))
+        self.idAssi = self.idAssi + 1
+        self.listAssignations.append(Assignation(self.idAssi, self.target, "Gestionnaire"))
 
     def roll(self, date: datetime.date, target: Target):
         print("--------START------")

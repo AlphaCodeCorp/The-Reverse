@@ -70,7 +70,6 @@ class Missy(commands.Cog):
 	@commands.command()
 	async def tt(self, ctx, *args):
 		_kwargs, _args = utils.parse_args(args)
-		print(_kwargs)
 
 		if "role" in _kwargs.keys() and "name" in _kwargs.keys() and "channel" in _kwargs.keys():	
 			self.missys.initialisation(ctx.guild, _kwargs)
@@ -83,14 +82,23 @@ class Missy(commands.Cog):
 		_kwargs, _args = utils.parse_args(args)
 
 		if "target" in _kwargs.keys() and "date" in _kwargs.keys():
-			for target in self.missys.listTargets:
-				if target.role.id == int(_kwargs["target"][3:-1]):
-					self.missys.roll(_kwargs["date"], target)
-					break
-				else:
-					print("Not this one")
+			if(self.validate(ctx, _kwargs["date"])):
+				for target in self.missys.listTargets:
+					if target.role.id == int(_kwargs["target"][3:-1]):
+						self.missys.roll(_kwargs["date"], target)
+						break
+			else:
+				await ctx.send("Incorrect data format, should be DD-MM-YYYY")
 		else:
 			await ctx.send("Argument missing in : 'role',  'date'\n Impossible Target's initialization")
+
+	def validate(self, ctx, date_text):
+		try:
+			datetime.datetime.strptime(date_text, '%d-%m-%Y')
+		except ValueError:
+			return False
+		
+		return True
 
 def setup(bot):
 	bot.add_cog(Missy(bot))
