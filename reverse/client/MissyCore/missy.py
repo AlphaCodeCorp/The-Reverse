@@ -71,7 +71,7 @@ class Missy(commands.Cog):
 		_kwargs, _args = utils.parse_args(args)
 		print(_kwargs)
 
-		missys = MissyCore(ctx)
+		missys = MissyCore(ctx.guild)
 		missys.roll(datetime.date.today(), missys.targetG1)
 
 def setup(bot):
