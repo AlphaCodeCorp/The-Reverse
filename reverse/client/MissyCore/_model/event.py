@@ -2,25 +2,29 @@ import random, datetime
 
 class Event():
 
-    def __init__(self, createAt: datetime.date, startOn: String, self.target_Id):
-        self.createAt
-        self.startOn
-        self.target_Id
-        self.assignation_Id
+    listAssignations = ["Animateur", "Secretaire", "Scribe", "Gestionnaire"]
 
-    def getLastXTirages(self):
+    def __init__(self, _createAt: datetime.date, _startOn: String, _target_Id: String):
+        self.createAt = _createAt
+        self.startOn = _startOn
+        self.target_Id = _target_Id
+        self.assignation_Id = 0
+
+    @staticmethod
+    def getLastXTirages(assignation: String):
         # TODO Récupération des derniers tirages
         return ["Jean", "Paul"]
 
-    def clearTirage(self, users: list, lastTirage: list):
+    @staticmethod
+    def clearTirage(users: list, lastTirage: list):
         # TODO Supprimer les membres dispo au tirage et le membres déjà pick auparavant 
         return ["Jean", "Paul", "Maurice", "Alain", "Bob", "Thomas"]
 
-    def pickOn(self, user: list):
+    @staticmethod
+    def pickOn(user: list):
         return random.choices(user)
 
     async def roll(self, date: datetime.date, target: Target):
-
 
         membersPick = []
 
@@ -31,12 +35,11 @@ class Event():
         # à la liste des utilisateurs dans la base de données
         if target.compare(listMembers):
             for assignation in self.listAssignations:
-                if assignation.target == target:
-
-                    XlastTirage = assignation.getLastXTirages()
-                    users = assignation.clearTirage(listMembers, XlastTirage)
-                    user = assignation.roll(users)
-                    membersPick.append([assignation.name, user])
+                
+                    XlastTirage = self.gettLastXTirages(assignation)
+                    users = self.clearTirage(listMembers, XlastTirage)
+                    user = self.pickOn(users)
+                    membersPick.append([assignation, user])
 
             print(membersPick)
             await self.message(membersPick, target, date)
