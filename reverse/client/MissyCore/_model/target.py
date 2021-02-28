@@ -1,7 +1,6 @@
 from reverse.core import Role
 from discord import TextChannel, Guild
 
-
 class Target(Role):
 
     def __new__(cls, id: int, channel: TextChannel, name: str, role_id: int, guild: Guild):
@@ -13,6 +12,8 @@ class Target(Role):
         self.channel = channel
         self.name = name
 
-    def compare(self, toCompare):
-        # TODO
+    @staticmethod
+    def compare(toCompare):
+        # TODO Créer laa fonction de comparaison entre la liste des membres du serveur 
+        # et la liste en base de donnée pour vérifier la concordance
         return True

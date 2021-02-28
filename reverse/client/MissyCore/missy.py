@@ -66,39 +66,30 @@ class Missy(commands.Cog):
 			else:
 				await ctx.send("This role is unused.")
 
-	# Command to initialize Target
 	@commands.command()
 	async def tt(self, ctx, *args):
+		"""Command to initialize Target"""
 		_kwargs, _args = utils.parse_args(args)
+		_role = _kwargs.get("role", None)
+		_channel = _kwargs.get("channel", None)
+		_name = _kwargs.get("name", None)
 
-		if "role" in _kwargs.keys() and "name" in _kwargs.keys() and "channel" in _kwargs.keys():	
-			self.missys.initialisation(ctx.guild, _kwargs)
+		if(_role and _channel and _name):	
+			self.missys.setup(ctx.guild, _role, _channel, _name)
 		else:
-			ctx.send("Argument missing in : 'name', 'role',  'channel'\n Impossible Target's initialization")
+			ctx.send("Argument missing in : 'name', 'role' or 'channel'\n Impossible Target's initialization")
 	
-	# Command to roll for a target
 	@commands.command()
 	async def ll(self, ctx, *args):
+		"""Command to roll for a target"""
 		_kwargs, _args = utils.parse_args(args)
+		_date = _kwargs.get("date", None)
+		_target = _kwargs.get("target", None)
 
-		if "target" in _kwargs.keys() and "date" in _kwargs.keys():
-			if(self.validate(ctx, _kwargs["date"])):
-				for target in self.missys.listTargets:
-					if target.role.id == int(_kwargs["target"][3:-1]):
-						await self.missys.roll(_kwargs["date"], target)
-						break
-			else:
-				await ctx.send("Incorrect data format, should be DD-MM-YYYY")
+		if(_date and _target):
+			await self.missys.roll(_date, target)
 		else:
-			await ctx.send("Argument missing in : 'role',  'date'\n Impossible Target's initialization")
-
-	def validate(self, ctx, date_text):
-		try:
-			datetime.datetime.strptime(date_text, '%d-%m-%Y')
-		except ValueError:
-			return False
-		
-		return True
+			await ctx.send("Argument missing in : 'target' or  'date'\n Impossible Target's initialization")
 
 def setup(bot):
 	bot.add_cog(Missy(bot))
