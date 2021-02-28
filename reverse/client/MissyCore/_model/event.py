@@ -44,8 +44,8 @@ class Event():
 
             print(membersPick)
             _assignation = Assignation(1)
-            _assignation.assignationByRole = membersPick
-            
+            _assignation.splitAssignations(membersPick)
+
             await self.message(membersPick, target, date)
     
     async def message(self, membersPick: list, target: Target, date:datetime.date):
