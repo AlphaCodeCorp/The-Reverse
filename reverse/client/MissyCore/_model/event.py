@@ -1,13 +1,12 @@
-import random
+import random, datetime
 
 class Event():
 
-    def __init__():
+    def __init__(self, createAt: datetime.date, startOn: String, self.target_Id):
         self.createAt
         self.startOn
         self.target_Id
-        self.assignation
-        self.user_Id
+        self.assignation_Id
 
     def getLastXTirages(self):
         # TODO Récupération des derniers tirages
@@ -17,15 +16,11 @@ class Event():
         # TODO Supprimer les membres dispo au tirage et le membres déjà pick auparavant 
         return ["Jean", "Paul", "Maurice", "Alain", "Bob", "Thomas"]
 
-    def roll(self, user: list):
+    def pickOn(self, user: list):
         return random.choices(user)
 
     async def roll(self, date: datetime.date, target: Target):
-        print("--------START------")
-        print(self.listTargets)
-        print("--------------------")
-        print(self.listAssignations)
-        print("---------END--------")
+
 
         membersPick = []
 
