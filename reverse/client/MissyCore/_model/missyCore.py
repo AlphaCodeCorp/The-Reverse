@@ -1,5 +1,4 @@
 from .target import Target
-from .assignation import Assignation
 from .event import Event
 from reverse.core import utils
 from discord.utils import get as disc_get

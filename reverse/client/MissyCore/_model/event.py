@@ -1,4 +1,5 @@
 import random, datetime
+from .assignation import Assignation
 
 class Event():
 
@@ -34,14 +35,17 @@ class Event():
         # Comparer la liste des utilisateurs de ce role sur le serveur 
         # à la liste des utilisateurs dans la base de données
         if target.compare(listMembers):
-            for assignation in self.listAssignations:
+            for name_assignation in self.listAssignations:
                 
-                    XlastTirage = self.gettLastXTirages(assignation)
+                    XlastTirage = self.gettLastXTirages(name_assignation)
                     users = self.clearTirage(listMembers, XlastTirage)
                     user = self.pickOn(users)
-                    membersPick.append([assignation, user])
+                    membersPick.append([name_assignation, user])
 
             print(membersPick)
+            _assignation = Assignation(1)
+            _assignation.assignationByRole = membersPick
+            
             await self.message(membersPick, target, date)
     
     async def message(self, membersPick: list, target: Target, date:datetime.date):

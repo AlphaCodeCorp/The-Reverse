@@ -2,9 +2,8 @@ from .target import Target
 
 class Assignation():
 
-    def __init__(self, id: int, target: Target, name: str):
+    def __init__(self, id: int):
         self.id = id
-        self.secretaire
-        self.animateur
-        self.scribe
-        self.gestionnaire
+        
+        # Data like : [[animateur: Bob],[secretaire: Bob],[scribe: Bob],[gestionnaire: Bob]]
+        self.assignationByRole
