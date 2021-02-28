@@ -12,7 +12,7 @@ class MissyCore():
         self.target_id_count = 0
 
     def setup(self, guild: Guild, role: String, channel: String, name: String):
-        # set up Target
+        '''set up Target'''
         self.channel = guild.get_channel(int(channel[2:-1]))
         self.target_id_count = self.target_id_count + 1
         self.target = Target(self.target_Id, self.channel, name, int(role[3:-1]), guild)
@@ -22,18 +22,21 @@ class MissyCore():
 
     # TODO : Create function to init MissyCore and get target in DB
 
-    async def tirage(self, ctx, date: String, target: String):
+    async def tirage(self, ctx, date: String, target: int):
         print("--------START------")
         print(self.listTargets)
         print("--------------------")
         print(self.listAssignations)
         print("---------END--------")
 
-        # i do my best here, but i don't know how improve the readability 
-        if(utils.valideDate(date)):
+        _isDate = utils.valideDate(date)
+        if(_isDate):
+            """List all target to process"""
             for _target in self.listTargets:
-                if(int(target[3:1]) == _target.role.id):
-                    event = Event(datetime.date.today(), date, _target.target_Id)
+                if(target == _target.role.id):
+                    event = Event(utils.now(), date, _target.id)
+                    """TODO : Information log"""
                     await event.roll(date, _target)
         else:
+            """TODO : Warning log"""
             await ctx.send("Incorrect data format, should be DD-MM-YYYY")
