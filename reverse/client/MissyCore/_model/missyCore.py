@@ -11,28 +11,22 @@ class MissyCore():
         self.list_targets = []
         self.target_id_count = 0
 
-    def setup(self, guild: Guild, role: String, channel: String, name: String):
+    def setup(self, guild: Guild, role: str, channel: str, name: str):
         '''set up Target'''
         self.channel = guild.get_channel(int(channel[2:-1]))
         self.target_id_count = self.target_id_count + 1
-        self.target = Target(self.target_Id, self.channel, name, int(role[3:-1]), guild)
+        self.target = Target(123, self.channel, name, int(role[3:-1]), guild)
         self.list_targets.append(self.target)
 
         # TODO : Save target in DB. Be carefull about target_Id
 
     # TODO : Create function to init MissyCore and get target in DB
 
-    async def tirage(self, ctx, date: String, target: int):
-        print("--------START------")
-        print(self.listTargets)
-        print("--------------------")
-        print(self.listAssignations)
-        print("---------END--------")
-
+    async def tirage(self, ctx, date: str, target: int):
         _isDate = utils.valideDate(date)
         if(_isDate):
             """List all target to process"""
-            for _target in self.listTargets:
+            for _target in self.list_targets:
                 if(target == _target.role.id):
                     event = Event(utils.now(), date, _target.id)
                     """TODO : Information log"""
