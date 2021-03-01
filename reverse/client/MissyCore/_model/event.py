@@ -1,18 +1,19 @@
 import random, datetime
 from .assignation import Assignation
+from .target import Target
 
 class Event():
 
     listAssignations = ["Animateur", "Secretaire", "Scribe", "Gestionnaire"]
 
-    def __init__(self, _createAt: datetime.date, _startOn: String, _target_Id: String):
+    def __init__(self, _createAt: datetime.date, _startOn: str, _target_Id: str):
         self.createAt = _createAt
         self.startOn = _startOn
         self.target_Id = _target_Id
         self.assignation_Id = 0
 
     @staticmethod
-    def getLastXTirages(assignation: String):
+    def getLastXTirages(assignation: str):
         # TODO Récupération des derniers tirages
         return ["Jean", "Paul"]
 
@@ -37,7 +38,7 @@ class Event():
         if target.compare(listMembers):
             for name_assignation in self.listAssignations:
                 
-                    XlastTirage = self.gettLastXTirages(name_assignation)
+                    XlastTirage = self.getLastXTirages(name_assignation)
                     users = self.clearTirage(listMembers, XlastTirage)
                     user = self.pickOn(users)
                     membersPick.append([name_assignation, user])

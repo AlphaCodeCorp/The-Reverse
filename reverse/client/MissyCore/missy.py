@@ -77,7 +77,7 @@ class Missy(commands.Cog):
 		if(_role and _channel and _name):	
 			self.missys.setup(ctx.guild, _role, _channel, _name)
 		else:
-			ctx.send("Argument missing in : 'name', 'role' or 'channel'\n Impossible Target's initialization")
+			await ctx.send("Argument missing in : 'name', 'role' or 'channel'\n Impossible Target's initialization")
 	
 	@commands.command()
 	async def ll(self, ctx, *args):
@@ -87,7 +87,7 @@ class Missy(commands.Cog):
 		_target = _kwargs.get("target", None)
 
 		if(_date and _target):
-			await self.missys.tirage(ctx, _date, int(target[3:1]))
+			await self.missys.tirage(ctx, _date, int(_target[3:-1]))
 		else:
 			await ctx.send("Argument missing in : 'target' or  'date'\n Impossible Target's initialization")
 
