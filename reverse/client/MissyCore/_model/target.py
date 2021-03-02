@@ -1,18 +1,19 @@
-from core._models.role import Role
-from discord import Channel
+from reverse.core import Role
+from discord import TextChannel, Guild
 
 class Target(Role):
 
-    def __init__(self, id: int, role: Role, channel: Channel, name: String, String, event: String):
-        self.id
-        self.role = role
+    def __new__(cls, id: int, channel: TextChannel, name: str, role_id: int, guild: Guild):
+        return super(Target, cls).__new__(cls, role_id, guild)
+
+    def __init__(self, id: int, channel: TextChannel, name: str, role_id: int, guild: Guild):
+        super().__init__(role_id, guild)
+        self.id = id
         self.channel = channel
-        self.guild = guild
-        super().__init__()
+        self.name = name
 
     @staticmethod
-    def compare(toCompare: Target):
-        if self.role == toCompare.role and self.channel == toCompare.channel:
-            return True
-        else:
-            return False
+    def compare(toCompare):
+        # TODO Créer laa fonction de comparaison entre la liste des membres du serveur 
+        # et la liste en base de donnée pour vérifier la concordance
+        return True
