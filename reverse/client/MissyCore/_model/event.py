@@ -1,6 +1,7 @@
 import random, datetime
 from .assignation import Assignation
 from .target import Target
+from discord import Embed
 
 class Event():
 
@@ -27,8 +28,7 @@ class Event():
         return random.choices(user)
 
     async def roll(self, date: datetime.date, target: Target):
-
-        membersPick = []
+        membersPick = {}
 
         # Pour la target
         listMembers = target.getAllMembers()
@@ -39,9 +39,12 @@ class Event():
             for name_assignation in self.listAssignations:
                 
                     XlastTirage = self.getLastXTirages(name_assignation)
-                    users = self.clearTirage(listMembers, XlastTirage)
+                    users = listMembers
                     user = self.pickOn(users)
-                    membersPick.append([name_assignation, user])
+                    while(user[0].name in membersPick.values()):
+                        user = self.pickOn(users)
+                    membersPick[name_assignation] = user[0].name
+                    #membersPick.append([name_assignation, user[0].name])
 
             print(membersPick)
             _assignation = Assignation(1)
@@ -49,10 +52,10 @@ class Event():
 
             await self.message(membersPick, target, date)
     
-    async def message(self, membersPick: list, target: Target, date:datetime.date):
+    async def message(self, membersPick: dict, target: Target, date:datetime.date):
         embed = Embed(title=date, color=0xe80005, timestamp=datetime.datetime.today())
         
-        for member in membersPick:
-            embed.add_field(name=member[0], value=member[1], inline=False)
+        for key, value in membersPick.items():
+            embed.add_field(name=key, value=value, inline=False)
 
         await target.channel.send(content="<@&" + str(target.role.id) + ">",embed=embed)
