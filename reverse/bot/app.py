@@ -1,5 +1,7 @@
 from reverse.client.reverse import Reverse
 from reverse.core._models import Server, Message, Context
+from discord.utils import get
+import discord
 from reverse.core import utils
 import asyncio
 import sys
@@ -24,6 +26,9 @@ class Bot(Reverse):
         self.addCommand(self.hey, pass_context=True)
         self.addCommand(self.remindme, pass_context=True)
         self.addCommand(self.reload, pass_context=True)
+        self.addCommand(self.dal, pass_context=True)
+        self.addCommand(self.where, pass_context=True)
+        self.addCommand(self.pcount, pass_context=True)
 
     async def on_ready(self, ctx=None):
         print('We have logged in as {0.user} using Bot implementation'.format(self.getClient()))
@@ -43,6 +48,40 @@ class Bot(Reverse):
     
     async def isShutingdown(self):
         return self.isShutingdown
+    
+    async def where(self,ctx):
+        print(self.getClient().guilds)
+
+    async def dal(self, ctx, *args):
+        ctx = Context(ctx)
+        _kwargs, _args = utils.parse_args(args)
+        if(ctx.author.id == 124598335230312448):
+            gen_id = 645635124624490516#
+            dal_id = 493126980011687987#
+            _guild = get(self.getClient().guilds, id=dal_id)
+            _channel = _guild.get_channel(gen_id)
+            if((_reply := _kwargs.get('reply', None))):
+                fetchMessage = await _channel.history().find(lambda m: f"{m.author.name}#{m.author.discriminator}" == _reply)
+                if(fetchMessage is not None):
+                    await fetchMessage.reply(_args[-1])
+            else:
+                await _channel.send(_args[-1])
+    
+    async def pcount(self, ctx, *args):
+        ctx = Context(ctx)
+        _kwargs, _args = utils.parse_args(args)
+        if(ctx.author.id == 124598335230312448):
+            gen_id = 830500947968262144#
+            dal_id = 373034685695000576#
+            _guild = get(self.getClient().guilds, id=dal_id)
+            _channel = _guild.get_channel(gen_id)
+            async for message in _channel.history(limit=1):
+                try:
+                    _n = int(message.content)+1
+                    print(f"message: {message.content}, next = {_n}")
+                except:
+                    print(f"message: {message.content}, not numb")
+                
     
     async def reload(self, ctx, *args):
         ctx = Context(ctx)

@@ -3,6 +3,7 @@ import discord
 from reverse.core._models import Server, Message, Context
 from reverse.core import utils, ReverseLogger
 import random
+from discord.utils import get
 
 
 class Reverse():
@@ -14,7 +15,7 @@ class Reverse():
 		intents.presences = False
 		intents.members = True
 		intents.reactions = True
-		self.client = Server(commands.Bot(command_prefix=command_prefix, description=description, kwargs=kwargs, intents=intents))
+		self.client = Server(commands.Bot(command_prefix=command_prefix, description=description, kwargs=kwargs, intents=intents, status=discord.Status.offline))
 		self.instance = self.getClient()
 		self.cogs = []
 		self.defaultCogs = ['reverse.client.default', 'reverse.client.debugger.debugger']
@@ -26,6 +27,7 @@ class Reverse():
 
 		self.reverseNotepadLogger = ReverseLogger("ReverseNotepad", initLog=False)
 		self.reverseNSALogger = ReverseLogger("ReverseNSA", consoleStream=True)
+		self.reverseCountLogger = ReverseLogger("ReverseCount", initLog=False)
 		
 
 	def run(self, token: str, cogs: list=[]):
@@ -74,11 +76,25 @@ class Reverse():
 			_attach+="\n"
 			for i in utils.getObjectsAttr(message.attachments, "url"):
 				_attach += "      -> {}\n".format(i)
+		""" print(message.to_reference())
+		print(f"{m.getData().type}") """
+
 		self.reverseNSALogger.info("[{0.channel}] <{0.guild}:{0.author}>: {0.content} {1}".format(m.getData(), _attach[:-1]))
 		if(self.instance.user.mentioned_in(message)):
 			self.reverseNotepadLogger.info("[{0.channel}] <{0.guild}:{0.author}>: {0.content} {1}".format(m.getData(), _attach[:-1]))
-		
+
 		ctx = Context(await self.getClient().get_context(message), __name__)
+		""" if(ctx.author.id == 124598335230312448):
+			gen_id = 842525518934310942#
+			dal_id = 373034685695000576#
+			_guild = get(self.getClient().guilds, id=dal_id)
+			_channel = _guild.get_channel(gen_id)
+			async for message in _channel.history(limit=1):
+				try:
+					_n = int(message.content)+1
+					await _channel.send(f"{_n}")
+				except:
+					pass  """
 		await self.getClient().invoke(ctx)
 
 	
