@@ -60,3 +60,9 @@ class Subsplease:
 		r = Route('GET', '/?f=schedule&h=true&tz=Europe/Paris')
 		s = await self.request(r)
 		return s
+
+	async def latest_release(self):
+		r = Route('GET', '/?f=latest&tz=Europe/Paris')
+		s = await self.request(r)
+		return s
+		
