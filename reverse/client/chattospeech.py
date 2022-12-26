@@ -7,6 +7,7 @@ from reverse.core._service import SqliteService
 from reverse.core._models import Message
 import pyttsx3
 import os
+from TTS.api import TTS
 
 
 
@@ -20,7 +21,8 @@ class ChatToSpeech(commands.Cog):
 		self.room = []
 		self.voicechannel = None
 		self._basechannel = None
-		self.engine = pyttsx3.init()
+		self.tts = TTS(TTS.list_models()[0])
+		self.engine = pyttsx3.init(driverName="sapi5")
 		self.voices = self.engine.getProperty('voices')
 		self.engine.setProperty('voice', self.voices[0].id)
 		self.engine.setProperty("rate", 175)
@@ -144,7 +146,8 @@ class ChatToSpeech(commands.Cog):
 			print("Chat to Speech [{0.channel}] {0.content}".format(_message.getData()))
 			engine = self.generate_engine()
 
-			name = self.generate_file(engine, _message)
+			#name = self.generate_file(engine, _message)
+			name = self.generate_file_tts(_message)
 
 			self.queue.append(name)
 			print(f"Chat added to queue {name}")
@@ -164,6 +167,16 @@ class ChatToSpeech(commands.Cog):
 			engine.save_to_file("{0.content}".format(message.getData()), name)
 		engine.runAndWait()
 		return name
+	
+	def generate_file_tts(self, message) -> str:
+		name = "{0.id}.mp3".format(message.getData())
+
+		if(self.tellnick):
+			self.tts.tts_to_file(text="{0.author.nick} a dit {0.content}".format(message.getData()), speaker=self.tts.speakers[5], language=self.tts.languages[1], file_path=name)
+		else:
+			self.tts.tts_to_file(text="{0.content}".format(message.getData()), speaker=self.tts.speakers[5], language=self.tts.languages[1], file_path=name)
+		return name
+		
 	
 	def start_playing(self, *args):
 		if(len(self.queue) > 0 and self.voicechannel.is_playing() == False):
