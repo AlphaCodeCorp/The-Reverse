@@ -37,12 +37,13 @@ class SubspleaseClient(commands.Cog):
 			for e in _episode:
 				_name = e.get("title", "Unknown")
 				_page = e.get("page", "Empty")
+				_pagecleared = _page.replace('-', '+')
 				_hour = e.get("time", "Unknown")
 
 				if(e.get("aired", False) != False):
-					_value = f"[{_hour}]\tDiffusion: {_choose[1]}\thttps://animixplay.to/v1/{_page}"
+					_value = f"[{_hour}]\tDiffusion JP: {_choose[1]}\t[SubsPlease](https://subsplease.org/shows/{_page}/)\t[nyaa.si](https://nyaa.si/?q={_pagecleared})\t[GogoAnime](https://gogoanime.news/search.html?keyword={_page}&cat=all)"
 				else:
-					_value = f"[{_hour}]\tDiffusion: {_choose[0]}\thttps://animixplay.to/v1/{_page}"
+					_value = f"[{_hour}]\tDiffusion JP: {_choose[0]}\t[SubsPlease](https://subsplease.org/shows/{_page}/)\t[nyaa.si](https://nyaa.si/?q={_pagecleared})\t[GogoAnime](https://gogoanime.news/search.html?keyword={_page}&cat=all)"
 				_embed.add_field(name=_name, value=_value, inline=False)
 		else:
 			_embed.add_field(name="Aucune sortie", value="Un jour sans anime. Cringe", inline=False)
@@ -64,6 +65,7 @@ class SubspleaseClient(commands.Cog):
 				
 				_name = e
 				_page = _e.get("page", "Empty")
+				_pagecleared = _page.replace('-', '+')
 				_hour = _e.get("release_date", "Unknown")
 				_eps = _e.get("episode", "00")
 				_downloads = _e.get("downloads", [])
@@ -74,7 +76,7 @@ class SubspleaseClient(commands.Cog):
 					_url = d.get("magnet", "Unknown")
 					_n = _n + f"\n{_d} : [magnet]({_url})" """
 
-				_value = f"[{_hour}]\tDiffusion: <:green_circle:1047567792007819276>\nFlux: [AnimixPlay](https://animixplay.to/v1/{_page}/ep{int(_eps)})\t[SubsPlease](https://subsplease.org/shows/{_page}/)"
+				_value = f"[{_hour}]\tDiffusion JP: <:green_circle:1047567792007819276>\nFlux: [SubsPlease](https://subsplease.org/shows/{_page}/)\t[nyaa.si](https://nyaa.si/?q={_pagecleared})\t[GogoAnime](https://gogoanime.news/search.html?keyword={_page}&cat=all)"
 
 				_embed.add_field(name=_name, value=_value, inline=False)
 		else:
@@ -119,7 +121,7 @@ class SubspleaseClient(commands.Cog):
 		embed2 = self._process_latest_release(data2, _guild, ctx)
 		await ctx.send(embed=embed1)
 		await ctx.send(embed=embed2)
-
+		
 
 		
 def setup(bot):
