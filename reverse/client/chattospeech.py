@@ -9,11 +9,14 @@ import pyttsx3
 import os
 
 
+
+
 class ChatToSpeech(commands.Cog):
 
+	"""This cog need PyNaCl and Pyttsx3 to work properly
+	"""
 	def __init__(self, bot):
 		self.bot = bot
-		self.bot.event(self.on_message)
 		self.room = []
 		self.voicechannel = None
 		self._basechannel = None
@@ -23,11 +26,6 @@ class ChatToSpeech(commands.Cog):
 		self.engine.setProperty("rate", 175)
 		self.queue = []
 		self.tellnick = True
-
-	#@commands.command()
-	async def chatspeech(self, ctx):
-		print(ctx.channel)
-		self.room.append(ctx.channel.id)
 
 	@commands.command()
 	async def rchangevoice(self, ctx, voiceid):
@@ -96,6 +94,9 @@ class ChatToSpeech(commands.Cog):
 		"""
 		author = ctx.message.author
 		channel = author.voice.channel
+		if(channel is None):
+			await ctx.send("You are not connected to any voice channel.")
+			pass
 		self.voicechannel = await channel.connect()
 		if(self.voicechannel):
 			self._basechannel = channel
@@ -139,7 +140,6 @@ class ChatToSpeech(commands.Cog):
 	async def on_message(self,message):
 		_entryrooms = self.room
 		_message = Message(message)
-		
 		if(message.channel.id in _entryrooms and not _message.getData().content.startswith("!")):
 			print("Chat to Speech [{0.channel}] {0.content}".format(_message.getData()))
 			engine = self.generate_engine()
@@ -175,5 +175,5 @@ class ChatToSpeech(commands.Cog):
 				print("Queue Chat to Speech end.")
 		
 
-def setup(bot):
-	bot.add_cog(ChatToSpeech(bot))
+async def setup(bot):
+	await bot.add_cog(ChatToSpeech(bot))
