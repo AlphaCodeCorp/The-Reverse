@@ -15,9 +15,9 @@ class Reverse():
 		self.client = Server(commands.Bot(command_prefix=command_prefix, description=description, kwargs=kwargs, intents=intents, status=discord.Status.offline))
 		self.instance = self.getClient()
 		self.cogs = []
-		self.defaultCogs = ['reverse.client.default', 'reverse.client.debugger.debugger']
+		self.defaultCogs = ['reverse.client.core', 'reverse.client.default', 'reverse.client.debugger.debugger']
 		self.toLoadCogs = utils.listCogs().keys()
-		
+
 		self.reverseNotepadLogger = ReverseLogger("ReverseNotepad", initLog=False)
 		self.reverseNSALogger = ReverseLogger("ReverseNSA", consoleStream=True)
 		self.reverseCountLogger = ReverseLogger("ReverseCount", initLog=False)
