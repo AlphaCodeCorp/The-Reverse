@@ -12,6 +12,7 @@ __copyright__ = 'Copyright 2015-2020 Rapptz'
 __codename__ = 'T.H.O.M.A.S.'
 __fullcodename__ = 'The Human Order Massively Aero Sexual'
 __version__ = '0.2.1'
+__logo__ = 'https://tenor.com/view/gurren-lagann-gif-22034489'
 
 class Reverse():
 

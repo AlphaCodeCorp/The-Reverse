@@ -2,7 +2,7 @@ from reverse.client.reverse import Reverse, __title__, __version__, __codename__
 from reverse.core._models import Server, Message, Context
 from discord.ext import commands
 from discord.utils import get
-import discord
+from discord import __version__ as dversion
 from reverse.core import utils
 import asyncio
 import sys
@@ -26,7 +26,7 @@ class Bot(Reverse):
 		self.getClient().event(self.on_message)
 
 	async def on_ready(self, ctx=None):
-		print(f'We have logged in as {self.getClient().user} using Bot implementation. Using {__title__} ver.{__version__} aka {__codename__}')
+		print(f'Using {__title__} ver.{__version__} aka {__codename__} - Discord.py ver.{dversion}')
 		print(f'Protocol {__fullcodename__}')
 	
 	async def run(self, token: str, status: str = "starting"):

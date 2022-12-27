@@ -2,6 +2,7 @@ from discord.ext import commands
 import asyncio
 from urllib import parse
 from reverse.core import utils
+from reverse.client.reverse import __fullcodename__, __version__, __logo__
 
 
 class DefaultCog(commands.Cog):
@@ -160,5 +161,10 @@ class DefaultCog(commands.Cog):
 					except:
 						print("could find message")
 
-def setup(bot):
-	bot.add_cog(DefaultCog(bot))
+	@commands.command()
+	async def whoami(self, ctx):
+		await ctx.send(f"I am The Reverse, codename : {__fullcodename__} ver.{__version__}")
+		await ctx.send(__logo__)
+
+async def setup(bot):
+	await bot.add_cog(DefaultCog(bot))
