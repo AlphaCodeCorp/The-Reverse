@@ -24,5 +24,5 @@ class ReverseRoles(commands.Cog):
 	async def on_reaction_add(self, reaction, user):
 		pass
 
-def setup(bot):
-	bot.add_cog(ReverseRoles(bot))
+async def setup(bot):
+	await bot.add_cog(ReverseRoles(bot))
