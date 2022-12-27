@@ -1,4 +1,4 @@
-from reverse.client.reverse import Reverse
+from reverse.client.reverse import Reverse, __title__, __version__, __codename__, __fullcodename__
 from reverse.core._models import Server, Message, Context
 from discord.utils import get
 import discord
@@ -31,7 +31,8 @@ class Bot(Reverse):
         self.addCommand(self.pcount, pass_context=True)
 
     async def on_ready(self, ctx=None):
-        print('We have logged in as {0.user} using Bot implementation'.format(self.getClient()))
+        print(f'We have logged in as {self.getClient().user} using Bot implementation. Using {__title__} ver.{__version__} aka {__codename__}')
+        print(f'Protocol {__fullcodename__}')
 
     async def hey(self, ctx: Context):
         await ctx.send("Hello!")

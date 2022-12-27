@@ -5,6 +5,12 @@ from reverse.core import utils, ReverseLogger
 import random
 from discord.utils import get
 
+__title__ = 'The Reverse'
+__author__ = 'Hveodrungr'
+__copyright__ = 'Copyright 2015-2020 Rapptz'
+__codename__ = 'T.H.O.M.A.S.'
+__fullcodename__ = 'The Human Order Massively Aero Sexual'
+__version__ = '0.2.1'
 
 class Reverse():
 
