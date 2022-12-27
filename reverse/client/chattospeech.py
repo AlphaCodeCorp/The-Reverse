@@ -188,5 +188,5 @@ class ChatToSpeech(commands.Cog):
 				print("Queue Chat to Speech end.")
 		
 
-def setup(bot):
-	bot.add_cog(ChatToSpeech(bot))
+async def setup(bot):
+	await bot.add_cog(ChatToSpeech(bot))

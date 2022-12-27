@@ -17,8 +17,7 @@ class Context(Context):
             invoked_with=ctx.invoked_with,
             invoked_subcommand=ctx.invoked_subcommand,
             subcommand_passed=ctx.subcommand_passed,
-            command_failed=ctx.command_failed,
-            _state=ctx._state
+            command_failed=ctx.command_failed
         )
         self.initClsName = clsName # Store the class name that initialized the Context
         self.run()

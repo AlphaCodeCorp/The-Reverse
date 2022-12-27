@@ -190,11 +190,16 @@ class Series(commands.Cog):
 
 		data = await self.planning_today()
 		episodes = data.get('days', [])
+		
+		try:
+			embed=Embed(title="Sortie du jour", color=0xe80005, timestamp=datetime.datetime.today())
+		except Exception as e:
+			print(e)
 
-		embed=Embed(title="Sortie du jour", color=0xe80005, timestamp=datetime.datetime.today(), thumbnail=self.LOGO)
 		if(len(episodes) > 0):
 			for e in episodes[0]['events']:
 				e = e['payload']
+				
 				try:
 					name = "{} {} — {}".format(e['show_title'], e['code'], e['title'])
 				except:
@@ -229,5 +234,5 @@ class Series(commands.Cog):
 
 
 	
-def setup(bot):
-	bot.add_cog(Series(bot))
+async def setup(bot):
+	await bot.add_cog(Series(bot))
