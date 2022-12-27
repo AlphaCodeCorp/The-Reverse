@@ -1,9 +1,10 @@
 from discord.ext import commands
 import asyncio
 from urllib import parse
+from discord import File
 from reverse.core import utils
 from reverse.client.reverse import __fullcodename__, __version__, __logo__
-
+from io import BytesIO
 
 class DefaultCog(commands.Cog):
 	
@@ -163,8 +164,13 @@ class DefaultCog(commands.Cog):
 
 	@commands.command()
 	async def whoami(self, ctx):
-		await ctx.send(f"I am The Reverse, codename : {__fullcodename__} ver.{__version__}")
-		await ctx.send(__logo__)
+		filename=__logo__
+		with open(filename, "rb") as fh:
+			po = BytesIO(fh.read())
+
+		fetch = await ctx.send("f̶͙̼͚̞̭̰͈̩͈͎͍͕̳̜̽̓́́́̂̚͠͝ḝ̴̬̼̗̥͌͑̌̉t̴̡̹̝̦̦̝͔̗̳̎́̓̋̔͘͝ḩ̸̯͕͚̪̩͈̘̻̣͙̼̀̽̈́̿̓̄̆̕i̷͎̪̩̣̗͕̳̞̤̜̫͚̲̐̓̈̑̂n̸̡̺͖̿́̃̓̋̑̈̍̀̑͋̈́̾͋g̷̢̦̗͕̗̤͎̓̍͒̀...")
+		await ctx.send(f"I am The Reverse, codename : {__fullcodename__} ver.{__version__}", file=File(fp=po, filename=filename.split('/')[-1]))
+		await fetch.delete()
 
 async def setup(bot):
 	await bot.add_cog(DefaultCog(bot))
