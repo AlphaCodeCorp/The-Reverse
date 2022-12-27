@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from discord import Embed
 import datetime
@@ -53,5 +54,5 @@ class pierre(commands.Cog):
 			await message.channel.send("Merci {} de ta réponse. ({})".format(user, reaction))
 			await message.delete()
 
-def setup(bot):
-	bot.add_cog(pierre(bot))
+async def setup(bot):
+	await bot.add_cog(pierre(bot))

@@ -91,5 +91,5 @@ class Missy(commands.Cog):
 		else:
 			await ctx.send("Argument missing in : 'target' or  'date'\n Impossible Target's initialization")
 
-def setup(bot):
-	bot.add_cog(Missy(bot))
+async def setup(bot):
+	await bot.add_cog(Missy(bot))
