@@ -10,8 +10,6 @@ import os
 from TTS.api import TTS
 
 
-
-
 class ChatToSpeech(commands.Cog):
 
 	"""This cog need PyNaCl and Pyttsx3 to work properly
@@ -22,7 +20,7 @@ class ChatToSpeech(commands.Cog):
 		self.voicechannel = None
 		self._basechannel = None
 		#self.tts = TTS(TTS.list_models()[0])
-		self.engine = pyttsx3.init(driverName="sapi5")
+		self.engine = pyttsx3.init()
 		self.voices = self.engine.getProperty('voices')
 		self.engine.setProperty('voice', self.voices[0].id)
 		self.engine.setProperty("rate", 175)

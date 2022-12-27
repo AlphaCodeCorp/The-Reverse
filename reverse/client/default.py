@@ -169,7 +169,7 @@ class DefaultCog(commands.Cog):
 			po = BytesIO(fh.read())
 
 		fetch = await ctx.send("f̶͙̼͚̞̭̰͈̩͈͎͍͕̳̜̽̓́́́̂̚͠͝ḝ̴̬̼̗̥͌͑̌̉t̴̡̹̝̦̦̝͔̗̳̎́̓̋̔͘͝ḩ̸̯͕͚̪̩͈̘̻̣͙̼̀̽̈́̿̓̄̆̕i̷͎̪̩̣̗͕̳̞̤̜̫͚̲̐̓̈̑̂n̸̡̺͖̿́̃̓̋̑̈̍̀̑͋̈́̾͋g̷̢̦̗͕̗̤͎̓̍͒̀...")
-		await ctx.send(f"I am The Reverse, codename : {__fullcodename__} ver.{__version__}", file=File(fp=po, filename=filename.split('/')[-1]))
+		await ctx.send(f"I am The Reverse, codename : {__fullcodename__} ver.{__version__}", file=File(fp=po, filename=filename.split('\\')[-1]))
 		await fetch.delete()
 
 async def setup(bot):
