@@ -1,3 +1,5 @@
 The-Reverse
 discord.py>=1.6.0
 mysql-connector-python
+flake8
+flake8-tabs

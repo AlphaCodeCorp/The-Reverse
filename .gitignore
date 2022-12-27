@@ -57,4 +57,5 @@ etc/backend.json
 etc/
 run.ps1
 cogs.json
-
+run
+runService

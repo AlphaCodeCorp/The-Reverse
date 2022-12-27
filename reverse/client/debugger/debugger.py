@@ -140,5 +140,5 @@ class Debugger(commands.Cog):
 			_t = utils.generate_next_call(startDate=_t ,days=int(_kwargs.get('day', 1)), hours=int(_kwargs.get('hour', 0)), minutes=int(_kwargs.get('minute', 0)), seconds=int(_kwargs.get('second', 0)), adding=_adding)
 			await ctx.send("{}: {} - {}s".format(i,_t,utils.time_until(_t, startDate=_tminus)))
 
-def setup(bot):
-	bot.add_cog(Debugger(bot))
+async def setup(bot):
+	await bot.add_cog(Debugger(bot))

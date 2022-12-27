@@ -315,3 +315,11 @@ def getAllMembers(guild: Guild, roleID: int) -> list:
 	"""
 	r = getRole(int(roleID), guild)
 	return r.getAllMembers()
+
+def valideDate(date_text):
+	try:
+		datetime.datetime.strptime(date_text, '%d-%m-%Y')
+	except ValueError:
+		return False
+	
+	return True

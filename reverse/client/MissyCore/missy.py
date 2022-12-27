@@ -1,10 +1,11 @@
 from discord.ext import commands
 from discord import Guild
-import asyncio
+import asyncio, datetime
 from urllib import parse
 from reverse.core._service import SqliteService
 from reverse.core._models import Context, Role
 from reverse.core import utils
+from reverse.client.MissyCore._model import MissyCore
 
 class Missy(commands.Cog):
 
@@ -12,6 +13,7 @@ class Missy(commands.Cog):
 		self.bot = bot
 		self.db = SqliteService()
 		self.schedule = []
+		self.missys = MissyCore()
 
 	@commands.command()
 	async def whoismissy(self, ctx):
@@ -64,5 +66,30 @@ class Missy(commands.Cog):
 			else:
 				await ctx.send("This role is unused.")
 
-def setup(bot):
-	bot.add_cog(Missy(bot))
+	@commands.command()
+	async def tt(self, ctx, *args):
+		"""Command to initialize Target"""
+		_kwargs, _args = utils.parse_args(args)
+		_role = _kwargs.get("role", None)
+		_channel = _kwargs.get("channel", None)
+		_name = _kwargs.get("name", None)
+
+		if(_role and _channel and _name):	
+			self.missys.setup(ctx.guild, _role, _channel, _name)
+		else:
+			await ctx.send("Argument missing in : 'name', 'role' or 'channel'\n Impossible Target's initialization")
+	
+	@commands.command()
+	async def ll(self, ctx, *args):
+		"""Command to roll for a target"""
+		_kwargs, _args = utils.parse_args(args)
+		_date = _kwargs.get("date", None)
+		_target = _kwargs.get("target", None)
+
+		if(_date and _target):
+			await self.missys.tirage(ctx, _date, int(_target[3:-1]))
+		else:
+			await ctx.send("Argument missing in : 'target' or  'date'\n Impossible Target's initialization")
+
+async def setup(bot):
+	await bot.add_cog(Missy(bot))
