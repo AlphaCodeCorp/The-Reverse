@@ -7,27 +7,27 @@ from reverse.core._service import SqliteService
 from reverse.core._models import Message
 import pyttsx3
 import os
+from TTS.api import TTS
+
+
 
 
 class ChatToSpeech(commands.Cog):
 
+	"""This cog need PyNaCl and Pyttsx3 to work properly
+	"""
 	def __init__(self, bot):
 		self.bot = bot
-		self.bot.event(self.on_message)
 		self.room = []
 		self.voicechannel = None
 		self._basechannel = None
-		self.engine = pyttsx3.init()
+		#self.tts = TTS(TTS.list_models()[0])
+		self.engine = pyttsx3.init(driverName="sapi5")
 		self.voices = self.engine.getProperty('voices')
 		self.engine.setProperty('voice', self.voices[0].id)
 		self.engine.setProperty("rate", 175)
 		self.queue = []
 		self.tellnick = True
-
-	#@commands.command()
-	async def chatspeech(self, ctx):
-		print(ctx.channel)
-		self.room.append(ctx.channel.id)
 
 	@commands.command()
 	async def rchangevoice(self, ctx, voiceid):
@@ -96,6 +96,9 @@ class ChatToSpeech(commands.Cog):
 		"""
 		author = ctx.message.author
 		channel = author.voice.channel
+		if(channel is None):
+			await ctx.send("You are not connected to any voice channel.")
+			pass
 		self.voicechannel = await channel.connect()
 		if(self.voicechannel):
 			self._basechannel = channel
@@ -139,12 +142,12 @@ class ChatToSpeech(commands.Cog):
 	async def on_message(self,message):
 		_entryrooms = self.room
 		_message = Message(message)
-		
 		if(message.channel.id in _entryrooms and not _message.getData().content.startswith("!")):
 			print("Chat to Speech [{0.channel}] {0.content}".format(_message.getData()))
 			engine = self.generate_engine()
 
 			name = self.generate_file(engine, _message)
+			#name = self.generate_file_tts(_message)
 
 			self.queue.append(name)
 			print(f"Chat added to queue {name}")
@@ -164,6 +167,16 @@ class ChatToSpeech(commands.Cog):
 			engine.save_to_file("{0.content}".format(message.getData()), name)
 		engine.runAndWait()
 		return name
+	
+	def generate_file_tts(self, message) -> str:
+		name = "{0.id}.mp3".format(message.getData())
+
+		if(self.tellnick):
+			self.tts.tts_to_file(text="{0.author.nick} a dit {0.content}".format(message.getData()), speaker=self.tts.speakers[5], language=self.tts.languages[1], file_path=name)
+		else:
+			self.tts.tts_to_file(text="{0.content}".format(message.getData()), speaker=self.tts.speakers[5], language=self.tts.languages[1], file_path=name)
+		return name
+		
 	
 	def start_playing(self, *args):
 		if(len(self.queue) > 0 and self.voicechannel.is_playing() == False):
