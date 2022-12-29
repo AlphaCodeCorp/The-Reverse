@@ -16,7 +16,7 @@ class SteamScraper(commands.Cog):
 		options.headless = True
 		self.driver = webdriver.Firefox(options=options)
 
-	@commands.command()
+	@commands.command(aliases=['tsteam'])
 	async def trendingsteam(self, ctx):
 		"""Return Trending top 10 steam game
 
@@ -29,7 +29,7 @@ class SteamScraper(commands.Cog):
 
 		await ctx.send(embed=embed)
 	
-	@commands.command()
+	@commands.command(aliases=['testeam'])
 	async def trendingevaluationsteam(self, ctx):
 		"""Return Trending top 10 by evaluation
 
@@ -42,7 +42,7 @@ class SteamScraper(commands.Cog):
 
 		await ctx.send(embed=embed)
 
-	@commands.command()
+	@commands.command(aliases=['lrsteam'])
 	async def lastreleasesteam(self, ctx):
 		"""Return steam last released game
 
@@ -55,7 +55,7 @@ class SteamScraper(commands.Cog):
 
 		await ctx.send(embed=embed)
 
-	@commands.command()
+	@commands.command(aliases=['prsteam'])
 	async def popularreleasesteam(self, ctx):
 		"""Return popular last released game
 
