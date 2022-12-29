@@ -23,12 +23,24 @@ class SteamScraper(commands.Cog):
 		await ctx.send(embed=embed)
 	
 	@commands.command()
-	async def trendingevaluation(self, ctx):
-		embed = self.get_all("https://store.steampowered.com/search/?sort_by=Reviews_DESC&filter=trending&ndl=1")
+	async def trendingevaluationsteam(self, ctx):
+		embed = self.get_all("https://store.steampowered.com/search/?sort_by=Reviews_DESC&filter=trending&ndl=1", name="Trending Steam by User Evaluation")
 
 		await ctx.send(embed=embed)
 
-	def get_all(self, url) -> Embed:
+	@commands.command()
+	async def steamlastreleasesteam(self, ctx):
+		embed = self.get_all("https://store.steampowered.com/search/?sort_by=Released_DESC&maxprice=10&supportedlang=french&category1=998&ndl=1", name="Last release")
+
+		await ctx.send(embed=embed)
+
+	@commands.command()
+	async def popularreleasesteam(self, ctx):
+		embed = self.get_all("https://store.steampowered.com/search/?filter=popularnew&sort_by=Released_DESC&os=win", name="Popular release")
+
+		await ctx.send(embed=embed)
+
+	def get_all(self, url, name="Trending Steam") -> Embed:
 		self.driver.get(url)
 
 		url = self.driver.find_elements("xpath", "//a[@class='search_result_row ds_collapse_flag ']")
@@ -37,7 +49,7 @@ class SteamScraper(commands.Cog):
 		prices = self.driver.find_elements("xpath", "//div[@class='col search_price  responsive_secondrow' or @class='col search_price discounted responsive_secondrow']")
 		i = 0
 
-		embed = Embed(title="Trending Steam", color=0x2f7fc2, timestamp=datetime.datetime.today())
+		embed = Embed(title=name, color=0x2f7fc2, timestamp=datetime.datetime.today())
 		for title in titles:
 			price = prices[i].text.split('\n')
 			release = releases[i].text
