@@ -323,3 +323,17 @@ def valideDate(date_text):
 		return False
 	
 	return True
+
+def strike(text):
+	"""Strikethrough string
+
+	Parameters
+	----------
+	text : Str
+
+	Returns
+	-------
+	str
+		Striketrough string
+	"""
+	return ''.join([u'\u0336{}'.format(c) for c in text])
