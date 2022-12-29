@@ -140,7 +140,7 @@ class ChatToSpeech(commands.Cog):
 	async def on_message(self,message):
 		_entryrooms = self.room
 		_message = Message(message)
-		if(message.channel.id in _entryrooms and not _message.getData().content.startswith("!")):
+		if(message.channel.id in _entryrooms and not _message.getData().content.startswith("!") and not message.author.bot):
 			print("Chat to Speech [{0.channel}] {0.content}".format(_message.getData()))
 			engine = self.generate_engine()
 
