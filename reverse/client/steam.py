@@ -18,29 +18,70 @@ class SteamScraper(commands.Cog):
 
 	@commands.command()
 	async def trendingsteam(self, ctx):
+		"""Return Trending top 10 steam game
+
+		Parameters
+		----------
+		ctx : Context
+			
+		"""
 		embed = self.get_all("https://store.steampowered.com/search/?filter=trending")
 
 		await ctx.send(embed=embed)
 	
 	@commands.command()
 	async def trendingevaluationsteam(self, ctx):
+		"""Return Trending top 10 by evaluation
+
+		Parameters
+		----------
+		ctx : Context
+		
+		"""
 		embed = self.get_all("https://store.steampowered.com/search/?sort_by=Reviews_DESC&filter=trending&ndl=1", name="Trending Steam by User Evaluation")
 
 		await ctx.send(embed=embed)
 
 	@commands.command()
-	async def steamlastreleasesteam(self, ctx):
-		embed = self.get_all("https://store.steampowered.com/search/?sort_by=Released_DESC&maxprice=10&supportedlang=french&category1=998&ndl=1", name="Last release")
+	async def lastreleasesteam(self, ctx):
+		"""Return steam last released game
+
+		Parameters
+		----------
+		ctx : Context
+			
+		"""
+		embed = self.get_all("https://store.steampowered.com/search/?sort_by=Released_DESC&category1=998&ndl=1", name="Last release")
 
 		await ctx.send(embed=embed)
 
 	@commands.command()
 	async def popularreleasesteam(self, ctx):
+		"""Return popular last released game
+
+		Parameters
+		----------
+		ctx : Context
+			
+		"""
 		embed = self.get_all("https://store.steampowered.com/search/?filter=popularnew&sort_by=Released_DESC&os=win", name="Popular release")
 
 		await ctx.send(embed=embed)
 
 	def get_all(self, url, name="Trending Steam") -> Embed:
+		"""Scrap steam search page and create an embed of the first 10 items
+
+		Parameters
+		----------
+		url : string
+			steam search page
+		name : str, optional
+			Title of the embed, by default "Trending Steam"
+
+		Returns
+		-------
+		Embed
+		"""
 		self.driver.get(url)
 
 		url = self.driver.find_elements("xpath", "//a[@class='search_result_row ds_collapse_flag ']")
