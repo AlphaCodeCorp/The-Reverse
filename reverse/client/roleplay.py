@@ -11,6 +11,7 @@ class Roleplayer(commands.Cog):
 	@commands.command()
 	async def rpjoin(self, ctx, role):
 		# Ajouter un rôle au membre qui a envoyé la commande
+		print(role)
 		if role in ROLES:
 			guild = ctx.guild
 			member = ctx.author
@@ -23,6 +24,7 @@ class Roleplayer(commands.Cog):
 	@commands.command()
 	async def rpleave(self, ctx, role):
 		# Supprimer un rôle du membre qui a envoyé la commande
+		print(role)
 		if role in ROLES:
 			guild = ctx.guild
 			member = ctx.author
