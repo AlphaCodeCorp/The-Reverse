@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-ROLES = ["Mage", "Guerrier", "Voleur", "Paladin", "Nécromancien"]
+ROLES = ["Mage", "Guerrier", "Voleur", "Paladin", "Necromancien"]
 
 class Roleplayer(commands.Cog):
 
