@@ -12,9 +12,9 @@ class SteamScraper(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
-		options = webdriver.ChromiumEdge()
+		options = webdriver.Chrome()
 		options.headless = True
-		self.driver = webdriver.ChromiumEdge(options=options)
+		self.driver = webdriver.Chrome(options=options)
 
 	@commands.command(aliases=['tsteam'])
 	async def trendingsteam(self, ctx):
